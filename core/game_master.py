@@ -49,7 +49,17 @@ class GameMaster:
         self.narrative_engine = NarrativeEngine()
         self.world_generator = WorldGenerator(world_config)
         self.coherence_checker = CoherenceChecker()
-        self.global_memory = GlobalMemory()
+        
+        # Préparation de l'ID du monde pour la mémoire globale
+        world_id = self.world_config.get('id')
+        if not world_id:
+            # Créer un slug à partir du nom (plus stable que hash())
+            import re
+            world_id = re.sub('[^a-z0-9]+','_', self.name.lower()).strip('_')
+            logger.info(f"ID de monde non défini dans le fichier de configuration. Utilisation de '{world_id}' comme fallback.")
+        
+        # Initialisation de la mémoire globale avec les identifiants du monde
+        self.global_memory = GlobalMemory(world_id=world_id, world_name=self.name)
         
         # Collections d'entités
         self.locations: Dict[str, Location] = {}
