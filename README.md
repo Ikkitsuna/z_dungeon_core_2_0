@@ -168,4 +168,4 @@ Une documentation plus détaillée est disponible dans le dossier `/docs` (en d�
 
 ---
 
-Créé avec ❤️ par [Votre nom]
+Créé avec ❤️ par Ikkitsuna
