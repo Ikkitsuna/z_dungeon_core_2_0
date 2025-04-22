@@ -72,6 +72,17 @@ class GameMaster:
         """Initialise un nouveau jeu en générant le monde et les entités."""
         logger.info(f"Initialisation d'un nouveau jeu dans le monde: {self.name}")
         
+        # Initialisation de la mémoire globale avec les identifiants du monde
+        # Utiliser l'ID défini dans le fichier YAML, ou générer un slug basé sur le nom si non défini
+        world_id = self.world_config.get('id')
+        if not world_id:
+            # Créer un slug à partir du nom (plus stable que hash())
+            import re
+            world_id = re.sub('[^a-z0-9]+','_', self.name.lower()).strip('_')
+            logger.info(f"ID de monde non défini dans le fichier de configuration. Utilisation de '{world_id}' comme fallback.")
+            
+        self.global_memory = GlobalMemory(world_id=world_id, world_name=self.name)
+        
         # Génération du monde initial
         generated_world = self.world_generator.generate()
         
