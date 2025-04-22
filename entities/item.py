@@ -42,6 +42,9 @@ class Item(Entity):
         self.condition = 100  # Pourcentage de l'état (100 = neuf, 0 = détruit)
         self.durability = -1  # -1 = indestructible, sinon nombre d'utilisations restantes
         
+        # Localisation de l'objet
+        self.location_id = None  # ID de la localisation où se trouve l'objet
+        
         # Propriétés spéciales
         self.properties = {}
         self.usable = False
@@ -361,6 +364,7 @@ class Item(Entity):
             'value': self.value,
             'condition': self.condition,
             'durability': self.durability,
+            'location_id': self.location_id,  # Inclure l'ID de localisation
             'properties': self.properties.copy(),
             'usable': self.usable,
             'use_effect': self.use_effect,
@@ -400,6 +404,7 @@ class Item(Entity):
         # Définir les propriétés spécifiques à l'objet
         item.condition = data.get('condition', 100)
         item.durability = data.get('durability', -1)
+        item.location_id = data.get('location_id', None)  # Charger la localisation
         item.properties = data.get('properties', {}).copy()
         item.usable = data.get('usable', False)
         item.use_effect = data.get('use_effect', '')
@@ -430,3 +435,17 @@ class Item(Entity):
         """
         import time
         return time.time()
+    
+    def get(self, attribute: str, default=None):
+        """
+        Méthode générique pour récupérer un attribut de l'objet.
+        Utile pour les interactions génériques comme la commande 'regarder'.
+        
+        Args:
+            attribute: Nom de l'attribut à récupérer
+            default: Valeur par défaut si l'attribut n'existe pas
+            
+        Returns:
+            Any: Valeur de l'attribut ou valeur par défaut
+        """
+        return getattr(self, attribute, default)

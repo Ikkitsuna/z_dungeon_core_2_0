@@ -708,7 +708,46 @@ class GlobalMemory:
         import uuid
         return f"chg_{uuid.uuid4().hex[:8]}"
 
-    # ====== MÉTHODES POUR LES LLMs LÉGERS ======
+    def add_memory(self, memory_type: str, content: str, source: str = "system", importance: int = 5) -> Dict[str, Any]:
+        """
+        Ajoute un nouveau souvenir à la mémoire globale.
+        Cette méthode est une façade qui redirige vers les méthodes appropriées 
+        en fonction du type de mémoire (événement, fait, etc.).
+        
+        Args:
+            memory_type: Type de mémoire (event, fact, observation)
+            content: Contenu du souvenir
+            source: Source du souvenir (system, player, npc)
+            importance: Importance du souvenir (1-10)
+            
+        Returns:
+            Dict[str, Any]: Le souvenir créé
+        """
+        if memory_type == "event":
+            return self.add_event(
+                description=content,
+                importance=importance,
+                event_type="observation" if source == "player" else "system_event"
+            )
+        elif memory_type == "fact":
+            category = "observations" if source == "player" else "system"
+            self.add_world_fact(category, content, importance)
+            return {"type": "fact", "category": category, "content": content}
+        elif memory_type == "observation":
+            return self.add_event(
+                description=content,
+                importance=importance,
+                event_type="observation"
+            )
+        else:
+            # Type par défaut: traité comme événement
+            return self.add_event(
+                description=content,
+                importance=importance,
+                event_type=memory_type
+            )
+
+# ====== MÉTHODES POUR LES LLMs LÉGERS ======
     
     def get_concise_summary(self, max_size: int = 1000) -> Dict[str, Any]:
         """

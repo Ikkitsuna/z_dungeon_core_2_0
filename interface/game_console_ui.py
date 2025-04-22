@@ -49,6 +49,11 @@ class GameConsoleUI(ConsoleUI):
         # État du jeu
         self.game_running = False
         
+        # Délais pour les affichages textuels
+        self.scene_delay = 0.03  # Délai par défaut pour les scènes (normal)
+        self.dialogue_delay = 0.02  # Délai par défaut pour les dialogues (normal)
+        self._text_speed = 'normal'  # Vitesse de texte par défaut
+        
         # Charger les ressources graphiques
         self.ascii_art = self._load_ascii_art()
     
@@ -312,9 +317,14 @@ class GameConsoleUI(ConsoleUI):
         
         self.clear_screen()
         self.print_header(self.current_location.name)
+
+        # Débogage: Afficher le type de lieu
+        print(f"DEBUG - Type de lieu: {self.current_location.location_type}")
+        print(f"DEBUG - Description brute: {self.current_location.description}")
         
-        # Afficher la description
-        self.print_scene(self.current_location.get_description())
+        
+        # Afficher la description - Utiliser get_formatted_description() au lieu de get_description()
+        self.print_scene(self.current_location.get_formatted_description())
         
         # Afficher les sorties disponibles
         exits = self.current_location.get_exits()

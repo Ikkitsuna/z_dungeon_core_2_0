@@ -394,3 +394,88 @@ class Location(Entity):
         location.modified_at = data.get('modified_at', location.modified_at)
         
         return location
+    
+    def get_exits(self) -> Dict[str, Any]:
+        """
+        Récupère les sorties disponibles depuis ce lieu.
+        Cette méthode est utilisée pour l'affichage dans l'interface utilisateur.
+        Note: Cette implémentation simplifiée renvoie un dictionnaire vide.
+        L'implémentation complète nécessiterait une référence au GameMaster pour
+        récupérer les objets Location correspondant aux IDs connexes.
+        
+        Returns:
+            Dict[str, Any]: Dictionnaire des sorties disponibles (direction -> lieu)
+        """
+        # Dans une implémentation complète, vous auriez besoin d'une référence
+        # au GameMaster pour transformer les IDs en objets Location
+        # Par exemple:
+        # exits = {}
+        # for location_id in self.connected_locations:
+        #    location = game_master.locations.get(location_id)
+        #    if location:
+        #        exits[f"vers {location.name}"] = location
+        
+        # Pour l'instant, retournons un dictionnaire vide
+        return {}
+    
+    def get_items(self) -> List[Any]:
+        """
+        Récupère les objets présents dans ce lieu.
+        Cette méthode est utilisée pour l'affichage dans l'interface utilisateur.
+        Note: Cette implémentation simplifiée renvoie une liste vide.
+        L'implémentation complète nécessiterait une référence au GameMaster pour
+        récupérer les objets Item correspondant aux IDs.
+        
+        Returns:
+            List[Any]: Liste des objets présents
+        """
+        # Dans une implémentation complète, vous auriez besoin d'une référence
+        # au GameMaster pour transformer les IDs en objets Item
+        # Par exemple:
+        # items = []
+        # for item_id in self.item_ids:
+        #    item = game_master.items.get(item_id)
+        #    if item:
+        #        items.append(item)
+        # return items
+        
+        # Pour l'instant, retournons une liste vide
+        return []
+    
+    def get_npcs(self) -> List[Any]:
+        """
+        Récupère les PNJ présents dans ce lieu.
+        Cette méthode est utilisée pour l'affichage dans l'interface utilisateur.
+        Note: Cette implémentation simplifiée renvoie une liste vide.
+        L'implémentation complète nécessiterait une référence au GameMaster pour
+        récupérer les objets NPC correspondant aux IDs.
+        
+        Returns:
+            List[Any]: Liste des PNJ présents
+        """
+        # Dans une implémentation complète, vous auriez besoin d'une référence
+        # au GameMaster pour transformer les IDs en objets NPC
+        # Par exemple:
+        # npcs = []
+        # for npc_id in self.npc_ids:
+        #    npc = game_master.npcs.get(npc_id)
+        #    if npc:
+        #        npcs.append(npc)
+        # return npcs
+        
+        # Pour l'instant, retournons une liste vide
+        return []
+    
+    def get(self, attribute: str, default=None):
+        """
+        Méthode générique pour récupérer un attribut du lieu.
+        Utile pour les interactions génériques comme la commande 'regarder'.
+        
+        Args:
+            attribute: Nom de l'attribut à récupérer
+            default: Valeur par défaut si l'attribut n'existe pas
+            
+        Returns:
+            Any: Valeur de l'attribut ou valeur par défaut
+        """
+        return getattr(self, attribute, default)

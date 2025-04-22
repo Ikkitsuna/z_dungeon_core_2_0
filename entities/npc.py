@@ -445,3 +445,17 @@ class NPC(Entity):
         """
         import time
         return time.time()
+    
+    def get(self, attribute: str, default=None):
+        """
+        Méthode générique pour récupérer un attribut du PNJ.
+        Utile pour les interactions génériques comme la commande 'regarder'.
+        
+        Args:
+            attribute: Nom de l'attribut à récupérer
+            default: Valeur par défaut si l'attribut n'existe pas
+            
+        Returns:
+            Any: Valeur de l'attribut ou valeur par défaut
+        """
+        return getattr(self, attribute, default)

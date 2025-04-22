@@ -112,19 +112,30 @@ class WorldGenerator:
         
         # Utiliser les lieux définis dans la configuration
         for location_type in self.lieux:
+            # S'assurer que location_type est une chaîne de caractères
+            if isinstance(location_type, dict):
+                # Si c'est un dictionnaire, extraire le type depuis la clé 'type' ou utiliser la première clé
+                if 'type' in location_type:
+                    location_type_str = location_type['type']
+                else:
+                    location_type_str = list(location_type.keys())[0] if location_type else 'default'
+                logger.warning(f"Un dictionnaire a été utilisé comme type de lieu. Conversion en chaîne: {location_type_str}")
+            else:
+                location_type_str = str(location_type)
+            
             # Déterminer le nombre de sous-lieux pour ce type
             sub_location_count = random.randint(2, 5)
             
             # Identifier la liste des sous-types possibles pour ce lieu
-            sub_location_types = self.location_types.get(location_type, ['section'])
+            sub_location_types = self.location_types.get(location_type_str, ['section'])
             
             # Générer le lieu principal
             main_location_id = str(uuid.uuid4())
             main_location = {
                 'id': main_location_id,
-                'name': self._generate_location_name(location_type),
-                'type': location_type,
-                'description': self._generate_location_description(location_type),
+                'name': self._generate_location_name(location_type_str),
+                'type': location_type_str,
+                'description': self._generate_location_description(location_type_str),
                 'connected_locations': [],
                 'npc_ids': [],
                 'item_ids': [],
@@ -295,12 +306,26 @@ class WorldGenerator:
                 "Un bâtiment sacré dédié aux dieux, avec des vitraux colorés et une atmosphère sereine.",
                 "Un lieu de culte orné de symboles religieux et de bougies votives.",
                 "Un sanctuaire paisible où les fidèles viennent prier et méditer."
+            ],
+            'generic': [  # Ajout de descriptions pour les lieux de type generic
+                "Un lieu ordinaire mais agréable, avec une atmosphère paisible.",
+                "Un endroit typique de la région, ni remarquable ni décevant.",
+                "Un lieu comme tant d'autres, qui vous invite néanmoins à l'explorer davantage.",
+                "Un endroit qui, malgré sa simplicité, possède un certain charme.",
+                "Un lieu ordinaire mais accueillant, où l'on se sent à l'aise."
+            ],
+            'default': [  # Ajout d'une catégorie par défaut pour tous les autres types
+                "Un lieu intéressant qui mérite d'être exploré plus en détail.",
+                "Un endroit qui attire votre attention par son atmosphère particulière.",
+                "Un lieu avec ses propres particularités qui le distinguent des autres.",
+                "Un endroit qui présente des caractéristiques uniques propres à sa nature."
             ]
         }
         
         # Utiliser une description par défaut si le type de lieu n'est pas dans notre dictionnaire
         if location_type not in descriptions:
-            return f"Un {location_type} typique, sans caractéristiques particulièrement remarquables."
+            # Utiliser les descriptions par défaut au lieu d'un message générique
+            return random.choice(descriptions['default'])
         
         return random.choice(descriptions[location_type])
     
