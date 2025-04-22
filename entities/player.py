@@ -341,3 +341,56 @@ class Player(Entity):
         """
         import time
         return time.time()
+    
+    def get(self, attribute: str) -> Any:
+        """
+        Récupère un attribut du joueur par son nom.
+        Cette méthode est utilisée pour fournir un accès uniforme aux attributs
+        du joueur, similaire aux autres entités du jeu.
+        
+        Args:
+            attribute: Nom de l'attribut à récupérer
+            
+        Returns:
+            Any: Valeur de l'attribut, ou None si l'attribut n'existe pas
+        """
+        # Attributs de base
+        if attribute == 'name':
+            return self.name
+        elif attribute == 'description':
+            return self.description
+        elif attribute == 'id':
+            return self.id
+        elif attribute == 'inventory':
+            return self.inventory.copy()
+        elif attribute == 'location_id':
+            return self.location_id
+        elif attribute == 'health':
+            return self.health
+        elif attribute == 'max_health':
+            return self.max_health
+        elif attribute == 'energy':
+            return self.energy
+        elif attribute == 'max_energy':
+            return self.max_energy
+        elif attribute == 'level':
+            return self.level
+        elif attribute == 'experience':
+            return self.experience
+        elif attribute == 'experience_to_level':
+            return self.experience_to_level
+        # Collections
+        elif attribute == 'memories':
+            return self.memories.copy()
+        elif attribute == 'relationships':
+            return self.relationships.copy()
+        elif attribute == 'quests':
+            return self.quests.copy()
+        elif attribute == 'objectives':
+            return self.objectives.copy()
+        elif attribute == 'skills':
+            return self.skills.copy()
+        elif attribute == 'knowledge':
+            return self.knowledge.copy()
+        # Si l'attribut n'existe pas
+        return None
