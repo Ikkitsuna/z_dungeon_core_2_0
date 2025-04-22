@@ -105,6 +105,15 @@ class Player(Entity):
         """
         return item_id in self.inventory
     
+    def get_inventory(self) -> List[str]:
+        """
+        Récupère la liste des objets dans l'inventaire du joueur.
+        
+        Returns:
+            List[str]: Liste des IDs d'objets dans l'inventaire
+        """
+        return self.inventory.copy()
+    
     def add_memory(self, memory_text: str, importance: int = 5) -> None:
         """
         Ajoute un souvenir au joueur.

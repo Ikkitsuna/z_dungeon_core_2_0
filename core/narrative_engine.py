@@ -124,6 +124,7 @@ class NarrativeEngine:
         
         # Formatage du contexte pour l'IA
         prompt = f"""Tu es le Maître du Jeu (MJ) d'un jeu de rôle textuel se déroulant dans un monde appelé "{world_config.get('nom', 'Monde inconnu')}".
+IMPORTANT: Tu dois répondre UNIQUEMENT en français. Ne réponds JAMAIS en anglais.
 Ambiance: {world_config.get('ambiance', 'Indéterminée')}
 Objectif: {world_config.get('objectif', 'Explorer et survivre')}
 
@@ -171,13 +172,14 @@ Personnages présents:
 ACTION DU JOUEUR: {action_text}
 
 En tant que MJ, réponds de manière immersive et narrative à l'action du joueur.
+- Réponds UNIQUEMENT en français.
 - Décris ce qui se passe de manière vivante et engageante.
 - Reste cohérent avec le contexte, l'ambiance et les personnages présents.
 - Utilise un langage descriptif et évocateur.
 - N'inclus pas de balises comme "MJ:" ou similaires, réponds directement comme un MJ.
 - Si l'action du joueur est impossible ou incohérente, explique pourquoi de manière immersive (sans dire explicitement que c'est impossible).
 
-Réponse du MJ:
+Réponse du MJ en français:
 """
         
         return prompt
@@ -217,6 +219,8 @@ Réponse du MJ:
             str: La réponse corrective du MJ
         """
         prompt = f"""Tu es le Maître du Jeu d'un jeu de rôle textuel.
+IMPORTANT: Tu dois répondre UNIQUEMENT en français, jamais en anglais.
+
 Le joueur a tenté une action qui n'est pas cohérente ou impossible à réaliser: "{action_text}"
 Raison: {reason}
 
@@ -231,8 +235,9 @@ Génère une réponse narrative qui:
 3. Maintient l'ambiance du jeu et le roleplaying
 4. N'utilise PAS de formulations comme "tu ne peux pas faire ça" ou "cette action est impossible"
 5. Reste dans le ton de l'univers de jeu
+6. Est OBLIGATOIREMENT rédigée en français, pas en anglais
 
-Réponse du MJ:
+Réponse du MJ en français:
 """
         
         return self.llm.generate_text(prompt)
@@ -248,6 +253,8 @@ Réponse du MJ:
             str: Description narrative du monde
         """
         prompt = f"""Tu es un maître conteur spécialisé dans la création de mondes imaginaires.
+IMPORTANT: Tu dois répondre UNIQUEMENT en français, jamais en anglais.
+
 Génère une description riche et évocatrice d'un monde pour un jeu de rôle textuel basé sur les informations suivantes:
 
 Nom du monde: {world_config.get('nom', 'Monde sans nom')}
@@ -261,8 +268,9 @@ La description doit:
 3. Donner un aperçu de l'histoire et des enjeux du monde
 4. Faire référence aux lieux principaux de manière intrigante
 5. Rester entre 150 et 250 mots
+6. Être OBLIGATOIREMENT rédigée en français
 
-Description du monde:
+Description du monde en français:
 """
         
         return self.llm.generate_text(prompt)
@@ -280,6 +288,8 @@ Description du monde:
             str: Description narrative du lieu
         """
         prompt = f"""Tu es un maître conteur spécialisé dans la description de lieux imaginaires.
+IMPORTANT: Tu dois répondre UNIQUEMENT en français, jamais en anglais.
+
 Génère une description riche et évocatrice du lieu suivant dans le monde "{world_config.get('nom', 'Monde inconnu')}":
 
 Nom du lieu: {location_name}
@@ -292,8 +302,9 @@ La description doit:
 3. Mentionner des détails architecturaux, naturels ou mystiques selon le type de lieu
 4. Suggérer des histoires ou événements passés liés à ce lieu
 5. Rester entre 100 et 150 mots
+6. Être OBLIGATOIREMENT rédigée en français
 
-Description du lieu:
+Description du lieu en français:
 """
         
         return self.llm.generate_text(prompt)
@@ -311,6 +322,8 @@ Description du lieu:
             Dict[str, Any]: Données complètes du PNJ généré
         """
         prompt = f"""Tu es un créateur de personnages pour un jeu de rôle narratif.
+IMPORTANT: Tu dois répondre UNIQUEMENT en français, jamais en anglais.
+
 Génère un personnage non-joueur (PNJ) complet pour le lieu "{location_name}" dans le monde "{world_config.get('nom', 'Monde inconnu')}".
 
 Rôle du PNJ: {npc_role}
@@ -353,8 +366,9 @@ Assure-toi que le personnage:
 - A une personnalité distincte et mémorable
 - Possède des motivations crédibles liées à son rôle
 - A un secret intéressant qui pourrait être découvert par le joueur
+- Toutes les descriptions et textes sont OBLIGATOIREMENT en français
 
-JSON du PNJ:
+JSON du PNJ en français:
 """
         
         response = self.llm.generate_text(prompt)
@@ -402,13 +416,16 @@ JSON du PNJ:
             str: Texte d'introduction
         """
         prompt = """Génère une introduction immersive pour le début d'une aventure de jeu de rôle textuel.
+IMPORTANT: Tu dois répondre UNIQUEMENT en français, jamais en anglais.
+
 Cette introduction doit:
 1. Établir une ambiance mystérieuse et engageante
 2. Inviter le joueur à explorer le monde
 3. Suggérer qu'il y a des secrets à découvrir
 4. Rester ouverte pour s'adapter à différents types de mondes
 5. Être écrite à la seconde personne (vous) pour impliquer directement le joueur
+6. Être OBLIGATOIREMENT rédigée en français
 
-Introduction:
+Introduction en français:
 """
         return self.llm.generate_text(prompt)
