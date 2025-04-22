@@ -1,171 +1,186 @@
-# Z-Dungeon Core 2.0
+# Z‑Dungeon Core 2.0
 
-![Version](https://img.shields.io/badge/version-2.0-blue)
-![Python](https://img.shields.io/badge/python-3.8%2B-green)
-![License](https://img.shields.io/badge/license-MIT-orange)
+&#x20;&#x20;
 
-Z-Dungeon Core 2.0 est un moteur de jeu de rôle narratif textuel avec un Maître du Jeu propulsé par Intelligence Artificielle. Ce système permet de créer, explorer et vivre des aventures narratives riches où le joueur interagit avec un monde dynamique et cohérent.
+> **Z‑Dungeon Core** est un moteur de jeu de rôle narratif textuel auto‑hébergé en français, doté d’un Maître du Jeu (MJ) alimenté par une intelligence artificielle locale (Ollama). Créez, explorez et vivez des aventures cohérentes dans des mondes entièrement persistants.
 
-## 🌟 Caractéristiques
+---
 
-- **Moteur narratif IA** - Utilise des modèles de langage locaux via [Ollama](https://ollama.ai/) pour générer du contenu narratif cohérent
-- **Systèmes de mémoire avancés** - Trois niveaux de mémoire (globale, locale, sociale) pour une cohérence narrative
-- **Interface console immersive** - Interface utilisateur en mode texte riche et colorée
-- **Architecture modulaire** - Facilement extensible et adaptable à différents types d'univers
-- **Entièrement en français** - Interface, documentation et narration entièrement en français
-- **Monde persistant** - Sauvegarde et chargement complet de l'état du monde
+## Sommaire&#x20;
 
-## 📋 Prérequis
+- [🌟 Fonctionnalités](#🌟-fonctionnalités)
+- [📋 Prérequis](#📋-prérequis)
+- [🚀 Installation](#🚀-installation)
+  - [Démarrage rapide (](#démarrage-rapide-run_demosh)[`run_demo.sh`](#démarrage-rapide-run_demosh)[)](#démarrage-rapide-run_demosh)
+  - [Installation manuelle](#installation-manuelle)
+- [🎮 Utilisation](#🎮-utilisation)
+  - [Options en ligne de commande](#options-en-ligne-de-commande)
+  - [Commandes en jeu](#commandes-en-jeu)
+- [🏗️ Architecture du projet](#🏗️-architecture-du-projet)
+- [🧠 Système de mémoire](#🧠-système-de-mémoire)
+- [🛠️ Configuration](#🛠️-configuration)
+- [🧪 Tests](#🧪-tests)
+- [🤝 Contribution](#🤝-contribution)
+- [📜 Licence](#📜-licence)
+- [🙏 Remerciements](#🙏-remerciements)
 
-- Python 3.8 ou supérieur
-- [Ollama](https://ollama.ai/) (pour les modèles de langage locaux)
-- Bibliothèques Python (voir `requirements.txt`)
+---
 
-## 🚀 Installation
+## 🌟 Fonctionnalités
 
-1. Clonez le dépôt :
-   ```bash
-   git clone https://github.com/votre-nom/z_dungeon_core_2_0.git
-   cd z_dungeon_core_2_0
-   ```
+- ✨ **Boucle de jeu complète** : state machine gérant le tour du joueur, la génération IA, la mise à jour du monde et l’auto‑sauvegarde toutes les 10 actions.
+- 🧠 **Moteur narratif IA** : génération de texte cohérente via [**Ollama**](https://ollama.ai/) (modèle par défaut : *llama3*). Option *dummy* pour les tests hors‑ligne.
+- 📖 **Systèmes de mémoire avancés** : mémoire *globale*, *locale* et *sociale* pour que le monde se souvienne de vos actions.
+- 🏘️ **Monde de démonstration “Village maudit”** : 10 lieux, 6 PNJ, 5 objets et une atmosphère sombre de village hanté.
+- ⌨️ **Interface console immersive** : couleurs Rich, ASCII‑art, dialogue MJ dédié.
+- 🔄 **Monde persistant** : sauvegarde horodatée, gestion de versions, lien symbolique vers la dernière partie.
+- 🧩 **Architecture modulaire** : facile à étendre (LLM, UI web, nouveaux mondes…).
+- 🇫🇷 **Entièrement en français** : interface et narration natives.
 
-2. Installez les dépendances :
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 📋 Prérequis
 
-3. Installez Ollama (si non installé) :
-   - Consultez [ollama.ai](https://ollama.ai/) pour les instructions d'installation
+- **Python ≥ 3.8** (`python --version` pour vérifier)
+- **Ollama** installé et lancé (`ollama serve`)
+- Libs Python listées dans `requirements.txt` (installation automatique ci‑dessous)
 
-4. Téléchargez un modèle compatible pour Ollama (llama3 recommandé) :
-   ```bash
-   ollama pull llama3
-   ```
+> **Systèmes testés :** Ubuntu 22.04, macOS 14, Windows 11 (WSL 2).
 
-## 🎮 Utilisation
+## 🚀 Installation
 
-### Démarrage rapide
+### Démarrage rapide (`run_demo.sh`)
 
-Lancez le jeu avec la commande :
 ```bash
-python main.py
+# Clone & lance la démo (UNIX‑like)
+git clone https://github.com/Ikkitsuna/z_dungeon_core_2_0.git
+cd z_dungeon_core_2_0
+./run_demo.sh
 ```
 
-Cela ouvrira l'assistant de création de monde ou vous permettra de choisir un monde existant.
+Le script :
 
-### Options de ligne de commande
+1. Vérifie Python 3, propose un virtualenv et installe les dépendances.
+2. Vérifie la présence du monde *Village maudit*.
+3. Lance automatiquement le jeu avec ce monde.
 
-- `python main.py --new` : Créer un nouveau monde
-- `python main.py --list` : Lister les mondes disponibles
-- `python main.py --world <chemin>` : Charger un monde spécifique
+### Installation manuelle
 
-### Commandes de jeu
+```bash
+# 1. Clone
+$ git clone https://github.com/Ikkitsuna/z_dungeon_core_2_0.git
+$ cd z_dungeon_core_2_0
 
-Une fois dans le jeu, vous pouvez utiliser des commandes comme :
-- `regarder` - Examiner votre environnement
-- `aller <direction>` - Se déplacer dans une direction
-- `parler à <personnage>` - Engager une conversation
-- `prendre <objet>` - Ramasser un objet
-- `inventaire` - Afficher votre inventaire
-- `aide` - Afficher la liste des commandes disponibles
+# 2. Environnement virtuel (facultatif mais recommandé)
+$ python -m venv .venv && source .venv/bin/activate  # Windows : .venv\Scripts\activate
 
-## 🏗️ Architecture du projet
+# 3. Dépendances
+$ pip install -r requirements.txt
+
+# 4. Télécharger un modèle LLM (ex. Llama 3 8B)
+$ ollama pull llama3:8b
+```
+
+## 🎮 Utilisation
+
+```bash
+python main.py            # Assistant interactif
+python main.py --world worlds/village_maudit.yaml   # Charge le monde de démo
+```
+
+### Options en ligne de commande
+
+| Option             | Effet                                              |
+| ------------------ | -------------------------------------------------- |
+| `--new`            | Créer un nouveau monde interactif                  |
+| `--list`           | Lister les mondes existants                        |
+| `--world <chemin>` | Charger un monde spécifique                        |
+| `--model <nom>`    | Surcharger le modèle LLM défini dans `config.yaml` |
+
+### Commandes en jeu
+
+| Commande            | Effet                            |
+| ------------------- | -------------------------------- |
+| `regarder`          | Examiner le lieu actuel          |
+| `aller <direction>` | Se déplacer                      |
+| `parler à <pnj>`    | Engager une conversation         |
+| `prendre <objet>`   | Ramasser un objet                |
+| `inventaire`        | Afficher votre inventaire        |
+| `sauvegarder`       | Sauvegarde immédiate             |
+| `quitter`           | Quitter puis reprendre plus tard |
+| `aide`              | Afficher toutes les commandes    |
+
+## 🏗️ Architecture du projet
 
 ```
 z_dungeon_core_2_0/
 │
-├── core/                      # Composants principaux
-│   ├── game_master.py         # Coordonne tous les aspects du jeu
-│   ├── narrative_engine.py    # Gère la génération de texte via LLM
-│   ├── llm_interface.py       # Interface pour les modèles de langage
-│   ├── config_manager.py      # Gestion de la configuration
-│   └── world_generator.py     # Génération procédurale de monde
-│
-├── memory/                    # Système de mémoire
-│   ├── memory_manager.py      # Gestionnaire central des mémoires
-│   ├── global_memory.py       # Mémoire globale du monde
-│   ├── local_memory.py        # Mémoire locale des entités
-│   └── social_memory.py       # Relations sociales entre entités
-│
-├── entities/                  # Entités du jeu
-│   ├── entity.py              # Classe de base des entités
-│   ├── player.py              # Joueur
-│   ├── npc.py                 # Personnages non-joueurs
-│   ├── location.py            # Lieux
-│   └── item.py                # Objets
-│
-├── interface/                 # Interface utilisateur
-│   ├── console_ui.py          # Interface console de base
-│   ├── game_console_ui.py     # Interface console spécifique au jeu
-│   └── command_parser.py      # Analyseur de commandes textuelles
-│
-├── templates/                 # Templates pour le moteur narratif
-│
-├── tests/                     # Tests unitaires
-│
-├── worlds/                    # Configurations de mondes
-│
-├── saves/                     # Sauvegardes de parties
-│
-├── main.py                    # Point d'entrée principal
-├── config.yaml                # Configuration globale
-└── requirements.txt           # Dépendances Python
+├── core/            # Moteur (GameMaster, NarrativeEngine, …)
+├── entities/        # Player, NPC, Item, Location…
+├── memory/          # Global, Local, Social, + manager
+├── interface/       # console_ui.py, game_console_ui.py, command_parser.py
+├── worlds/          # Fichiers YAML/JSON des mondes (Village maudit inclus)
+├── saves/           # Sauvegardes auto & manuelles
+├── templates/       # Prompts & narrative templates
+├── tests/           # PyTest + intégration
+├── run_demo.sh      # Script zéro‑config
+├── main.py          # Point d’entrée
+└── config.yaml      # Paramètres globaux
 ```
 
-## 🧠 Système de mémoire
+## 🧠 Système de mémoire
 
-Le système de mémoire à trois niveaux est l'une des fonctionnalités les plus avancées :
+| Niveau      | Portée        | Exemple                                       |
+| ----------- | ------------- | --------------------------------------------- |
+| **Globale** | Monde entier  | "Le maire a déclaré le couvre‑feu."           |
+| **Locale**  | Entité / lieu | Un PNJ se souvient que le joueur l’a aidé.    |
+| **Sociale** | Relations     | Score d’amitié/hostilité entre PNJ et joueur. |
 
-1. **Mémoire globale** - Stocke les faits sur le monde, l'historique des événements et les quêtes
-2. **Mémoire locale** - Chaque entité (PNJ, lieu) a sa propre mémoire et connaissances
-3. **Mémoire sociale** - Gère les relations et interactions entre les entités
+Les souvenirs décroissent (paramètre `decay_rate`) et sont résumés périodiquement (`summary_interval`).
 
-Ce système permet une cohérence narrative à long terme et des personnages qui se souviennent des interactions passées avec le joueur.
+## 🛠️ Configuration
 
-## 🛠️ Configuration
+Extrait du `config.yaml` :
 
-Le fichier `config.yaml` à la racine du projet permet de configurer tous les aspects du jeu :
-- Paramètres du modèle de langage (température, taille des réponses)
-- Comportement du système de mémoire
-- Chemins des fichiers de sauvegarde
-- Options d'interface utilisateur
+```yaml
+llm:
+  provider: "ollama"
+  model: "llama3"
+  temperature: 0.7
+  max_tokens: 500
+memory:
+  decay_rate: 0.1
+  summary_interval: 10
+  max_memory_items: 50
+```
 
-## 🧪 Tests
+## 🧪 Tests
 
-Exécutez les tests unitaires avec :
 ```bash
-python -m pytest tests/
+# Tous les tests
+python -m pytest -q
+
+# Intégration : monde + boucle de jeu (exemple)
+python -m pytest tests/test_integration.py -q
 ```
 
-Des tests spécifiques peuvent être exécutés avec :
-```bash
-python -m pytest tests/test_memory.py
-```
+## 🤝 Contribution
 
-## 🤝 Contribution
+1. Fork ; créez une branche (`git checkout -b feature/NouvelleFonction`).
+2. Codez, testez (`pytest`).
+3. Ouvrez une Pull Request.
 
-Les contributions sont les bienvenues ! Voici comment contribuer :
+### Standards
 
-1. Fork le projet
-2. Créez votre branche de fonctionnalité (`git checkout -b feature/AmazingFeature`)
-3. Committez vos changements (`git commit -m 'Add some AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrez une Pull Request
+- **PEP 8** vérifié par *ruff* & *black* (pré‑commit).
+- Commits conventionnels (`feat:`, `fix:`, `docs:` …).
 
-## 📜 Licence
+## 📜 Licence
 
-Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+MIT © 2025 **Ikkitsuna**
 
-## 📚 Documentation
+## 🙏 Remerciements
 
-Une documentation plus détaillée est disponible dans le dossier `/docs` (en développement).
+- [Ollama](https://ollama.ai/) pour le moteur LLM self‑host.
+- Bibliothèques Python : Rich, PyYAML, Requests…
+- Les testeurs et contributrices de la communauté.
 
-## 🙏 Remerciements
-
-- [Ollama](https://ollama.ai/) pour le support des modèles de langage locaux
-- La communauté Python pour les bibliothèques utilisées
-- Tous les testeurs et contributeurs au projet
-
----
-
-Créé avec ❤️ par Ikkitsuna
+*Créé avec ❤️ par ****Ikkitsuna***
