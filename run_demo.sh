@@ -53,7 +53,8 @@ fi
 mkdir -p saves
 
 # Lancer le jeu avec le monde de démonstration
+# Utilisation de -m pour exécuter en tant que module - cela résout les problèmes d'imports relatifs
 echo -e "${GREEN}Lancement de la démo avec le monde 'Village Maudit'...${NC}"
-python main.py --world worlds/village_maudit.yaml
+PYTHONPATH=. python3 main.py --world worlds/village_maudit.yaml
 
 exit 0

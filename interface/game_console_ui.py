@@ -12,9 +12,11 @@ from typing import Dict, List, Any, Optional, Callable
 
 from .console_ui import ConsoleUI
 from .command_parser import CommandParser
-from ..entities.player import Player
-from ..entities.location import Location
-from ..core.narrative_engine import NarrativeEngine
+
+# Changement des imports relatifs en imports absolus
+from entities.player import Player
+from entities.location import Location
+from core.narrative_engine import NarrativeEngine
 
 # Configuration du système de logging
 logger = logging.getLogger('GameConsoleUI')
