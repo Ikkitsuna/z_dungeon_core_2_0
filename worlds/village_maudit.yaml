@@ -1,0 +1,161 @@
+nom: "Village Maudit"
+ambiance: "Un village isolé dans les brumes, hanté par d'anciennes malédictions et secrets enfouis. L'atmosphère y est étouffante, le temps semble s'être figé. Les habitants évitent les regards directs et parlent à voix basse."
+objectif: "Découvrir la source de la malédiction qui frappe le village et y mettre fin."
+
+règles:
+  les_pnj_ne_savent_pas_tout: true
+  cohérence_stricte: true
+  difficulté: "moyenne"
+
+lieux:
+  - id: "place_centrale"
+    nom: "Place centrale du village"
+    description: "Une place pavée usée par le temps. En son centre, une vieille fontaine asséchée montre des signes d'abandon. Des corbeaux perchés sur les toits observent silencieusement les passants. L'atmosphère est lourde."
+    sorties:
+      nord: "auberge"
+      est: "forge"
+      sud: "maison_maire"
+      ouest: "échoppe"
+
+  - id: "auberge"
+    nom: "Auberge du Corbeau Boiteux"
+    description: "Une vieille bâtisse en bois dont l'enseigne grinçante représente un corbeau à la patte brisée. À l'intérieur, l'ambiance est sombre, éclairée par quelques bougies. Des murmures s'échangent dans les coins obscurs."
+    sorties:
+      sud: "place_centrale"
+      ouest: "route_forêt"
+
+  - id: "forge"
+    nom: "Forge de Gorn"
+    description: "Une forge dont la cheminée crache une fumée étrangement colorée. Des outils rouillés sont accrochés aux murs et l'atelier sent le métal brûlé et les herbes séchées. Des amulettes et symboles de protection sont gravés sur le seuil."
+    sorties:
+      ouest: "place_centrale"
+      nord: "cimetière"
+
+  - id: "maison_maire"
+    nom: "Demeure du Maire"
+    description: "La plus imposante maison du village, construite en pierre sombre. Des gargouilles ornent le toit et surveillent les passants. Les fenêtres sont constamment fermées malgré la fumée qui s'échappe de la cheminée."
+    sorties:
+      nord: "place_centrale"
+      est: "chemin_lac"
+
+  - id: "échoppe"
+    nom: "Échoppe de l'Apothicaire"
+    description: "Une petite boutique aux étagères couvertes de fioles colorées, d'herbes séchées et d'objets étranges. Une odeur âcre de plantes médicinales et d'encens flotte dans l'air. Des rideaux de perles séparent l'avant-boutique de l'arrière-salle mystérieuse."
+    sorties:
+      est: "place_centrale"
+
+  - id: "cimetière"
+    nom: "Cimetière Brumeux"
+    description: "Un enclos entouré d'un muret de pierre envahi par le lierre. Les tombes anciennes sont à moitié effacées par le temps et toujours couvertes d'une brume tenace, même en plein jour. Des saules pleureurs créent des zones d'ombre inquiétantes."
+    sorties:
+      sud: "forge"
+      est: "vieux_manoir"
+
+  - id: "vieux_manoir"
+    nom: "Manoir Abandonné"
+    description: "Une imposante bâtisse délabrée sur une colline surplombant le village. Ses fenêtres brisées semblent fixer le visiteur comme des yeux vides. Le portail en fer forgé est orné de symboles occultes presque effacés."
+    sorties:
+      ouest: "cimetière"
+
+  - id: "route_forêt"
+    nom: "Route vers la Forêt"
+    description: "Un chemin de terre qui s'éloigne du village et s'enfonce dans les bois. Des racines déforment le sol et des branches basses semblent vouloir barrer la route. Des marques étranges sont gravées sur certains arbres à l'orée de la forêt."
+    sorties:
+      est: "auberge"
+      ouest: "clairière"
+
+  - id: "clairière"
+    nom: "Clairière aux Murmures"
+    description: "Une clairière parfaitement circulaire au cœur de la forêt. Des pierres dressées forment un cercle au centre. Le sol est couvert de fleurs sauvages qui ne devraient pas pousser en cette saison. On dit que la nuit, des lueurs étranges y dansent."
+    sorties:
+      est: "route_forêt"
+
+  - id: "chemin_lac"
+    nom: "Chemin du Lac Noir"
+    description: "Un sentier qui descend vers un lac aux eaux sombres et immobiles. Des roseaux desséchés bordent les rives et aucun oiseau ne semble survoler cet endroit. Une vieille barque à moitié submergée est visible près du bord."
+    sorties:
+      ouest: "maison_maire"
+
+pnj:
+  - id: "gérante_auberge"
+    nom: "Martha"
+    description: "La tenancière de l'auberge, une femme d'âge mûr aux cheveux grisonnants et au regard perçant. Elle connaît tous les secrets du village mais préfère se taire. Ses mains sont marquées par des cicatrices étranges."
+    location_id: "auberge"
+    traits: ["méfiante", "observatrice", "protectrice"]
+    connaissances: ["rumeurs locales", "histoire récente du village"]
+
+  - id: "forgeron"
+    nom: "Gorn"
+    description: "Un homme massif aux bras couverts de tatouages symboliques. Son œil droit est laiteux, aveugle. Il parle peu mais chaque mot semble peser. On dit qu'il forge des objets qui peuvent repousser les mauvais esprits."
+    location_id: "forge"
+    traits: ["taciturne", "superstitieux", "habile"]
+    connaissances: ["anciennes traditions", "symboles de protection"]
+
+  - id: "maire"
+    nom: "Aldric Mort-Silencieuse"
+    description: "Un homme élancé et pâle, toujours vêtu de noir. Son sourire ne monte jamais jusqu'à ses yeux gris et froids. Il dirige le village d'une main de fer et semble particulièrement intéressé par les nouveaux venus."
+    location_id: "maison_maire"
+    traits: ["autoritaire", "manipulateur", "secret"]
+    connaissances: ["malédiction du village", "rituels anciens"]
+
+  - id: "apothicaire"
+    nom: "Vieille Erzulie"
+    description: "Une femme âgée aux doigts noueux et au dos voûté. Ses yeux noirs semblent voir au-delà des apparences. Elle collectionne les herbes rares et prépare des remèdes aussi bien que des poisons."
+    location_id: "échoppe"
+    traits: ["mystérieuse", "sage", "ambivalente"]
+    connaissances: ["remèdes", "plantes magiques", "présages"]
+
+  - id: "fossoyeur"
+    nom: "Mordin"
+    description: "Un homme voûté au visage creusé par les années. Il parle souvent tout seul ou peut-être aux morts qu'il enterre. Il ne se sépare jamais de sa vieille pelle usée et connaît chaque tombe du cimetière."
+    location_id: "cimetière"
+    traits: ["solitaire", "étrange", "patient"]
+    connaissances: ["morts récentes", "histoires des défunts"]
+
+  - id: "enfant_pâle"
+    nom: "Lili"
+    description: "Une petite fille aux cheveux blancs et à la peau diaphane qui apparaît et disparaît dans le village. Elle chantonne des comptines inquiétantes et semble savoir des choses qu'aucun enfant ne devrait connaître."
+    location_id: "place_centrale"
+    traits: ["éthérée", "omnisciente", "enjouée"]
+    connaissances: ["secrets cachés", "présence surnaturelle"]
+
+objets:
+  - id: "amulette_corbeau"
+    nom: "Amulette du Corbeau"
+    description: "Un pendentif en argent terni représentant un corbeau aux ailes déployées. Il est froid au toucher même après avoir été porté longtemps."
+    location_id: "auberge"
+    portable: true
+    utilisable: true
+    effet: "Protection contre les mauvais esprits"
+
+  - id: "vieux_grimoire"
+    nom: "Grimoire des Ombres"
+    description: "Un livre ancien relié en cuir sombre, dont les pages jaunies sont couvertes de symboles et de textes dans une langue oubliée. Certains passages semblent avoir été traduits en marge."
+    location_id: "vieux_manoir"
+    portable: true
+    utilisable: true
+    effet: "Révèle des connaissances sur la malédiction"
+
+  - id: "clé_rouillée"
+    nom: "Clé aux Symboles"
+    description: "Une clé en fer rouillé gravée de symboles étranges. Son anneau est décoré d'un motif de lune et de soleil entrelacés."
+    location_id: "forge"
+    portable: true
+    utilisable: true
+    effet: "Ouvre une porte secrète dans le manoir"
+
+  - id: "lanterne_brume"
+    nom: "Lanterne à Brume"
+    description: "Une lanterne en cuivre au verre teinté de bleu. Quand elle est allumée, sa lumière semble dissiper les brumes surnaturelles et révéler ce qui est caché."
+    location_id: "échoppe"
+    portable: true
+    utilisable: true
+    effet: "Révèle des éléments invisibles"
+
+  - id: "poupée_chiffon"
+    nom: "Poupée de Chiffon"
+    description: "Une poupée artisanale faite de morceaux de tissu cousus ensemble. Elle a des boutons noirs en guise d'yeux et des fils rouges brodés comme un sourire inquiétant. Des mèches de vrais cheveux y sont attachées."
+    location_id: "clairière"
+    portable: true
+    utilisable: true
+    effet: "Permet de communiquer avec les esprits"

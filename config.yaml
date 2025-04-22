@@ -1,0 +1,31 @@
+# Z-Dungeon Core 2.0 - Configuration
+# Ce fichier contient les paramètres globaux du jeu
+
+game:
+  name: "Z-Dungeon Core 2.0"
+  version: "2.0"
+  save_dir: "saves"
+  worlds_dir: "worlds"
+  debug_mode: false
+
+llm:
+  provider: "ollama"  # Options: ollama, dummy
+  model: "llama3"     # Modèle Ollama à utiliser
+  temperature: 0.7
+  max_tokens: 500
+  
+memory:
+  decay_rate: 0.1          # Taux de dégradation des souvenirs (0-1)
+  summary_interval: 10     # Générer un résumé tous les X événements
+  max_memory_items: 50     # Nombre max d'items dans la mémoire locale
+  importance_threshold: 3  # Seuil d'importance pour la mémorisation à long terme
+  
+logging:
+  level: "INFO"          # DEBUG, INFO, WARNING, ERROR
+  narrative_log: true    # Activer les logs narratifs
+  log_dir: "logs"        # Répertoire des fichiers de log
+  
+ui:
+  use_colors: true       # Utiliser les couleurs dans la console
+  text_speed: "normal"   # fast, normal, slow
+  ascii_art: true        # Afficher l'art ASCII
